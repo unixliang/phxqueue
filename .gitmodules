@@ -9,7 +9,7 @@
 	url = https://github.com/google/leveldb
 [submodule "third_party/phxpaxos"]
 	path = third_party/phxpaxos
-	url = https://github.com/Tencent/phxpaxos
+	url = https://github.com/unixliang/phxpaxos
 [submodule "third_party/protobuf"]
 	path = third_party/protobuf
 	url = https://github.com/google/protobuf
@@ -18,4 +18,4 @@
 	url = https://github.com/gflags/gflags
 [submodule "third_party/phxrpc"]
 	path = third_party/phxrpc
-	url = https://github.com/Tencent/phxrpc
+	url = https://github.com/unixliang/phxrpc
