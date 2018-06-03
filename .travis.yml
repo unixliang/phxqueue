@@ -13,3 +13,6 @@ branches:
   only:
   - /.*/
 
+branches:
+    only:
+        - test_travis
