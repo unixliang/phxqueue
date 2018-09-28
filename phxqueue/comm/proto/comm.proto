@@ -1,0 +1,258 @@
+syntax = "proto2";
+
+package phxqueue.comm.proto;
+
+message Cookie {
+    optional string key = 1;
+    optional bytes val = 2;
+}
+
+message Cookies {
+    repeated Cookie cookies = 1;
+}
+
+message Meta { // 不变量
+    optional int32 topic_id = 2;
+    optional int32 handle_id = 3;
+    optional uint64 uin    = 5;
+    optional uint64 consumer_group_ids = 8;
+    optional int32 pub_id = 9;
+    optional uint64 hash = 11;
+    optional uint64 atime  = 51;
+    optional uint32 atime_ms  = 52;
+    optional string client_id  = 55;
+	repeated int32 sub_ids = 56;
+
+    optional Cookies user_cookies = 61; // 放业务cookie/票据
+}
+
+message QItem {
+    optional int32 handle_id = 3;
+    optional bytes  buffer = 6;
+    optional int32 buffer_type  = 7;
+    optional uint64 consumer_group_ids = 8;
+    optional int32 pub_id = 9;
+    optional uint64 atime  = 51;
+    optional uint32 atime_ms  = 52;
+    optional uint32 count  = 54;
+	repeated int32 sub_ids = 56;
+
+    optional Cookies sys_cookies = 62; // 放队列参数
+
+    optional uint64 cursor_id = 101;
+
+    optional Meta meta = 201;
+}
+
+message ConsumerContext {
+    optional int32 topic_id = 1;
+    optional int32 consumer_group_id = 2 [default = -1];
+    optional int32 store_id = 4 [default = -1];
+    optional int32 queue_id = 5 [default = -1];
+    optional uint64 prev_cursor_id = 6 [default = 0xffffffffffffffff];
+    optional uint64 next_cursor_id = 7 [default = 0xffffffffffffffff];
+	optional int32 back_log = 8[default = 0];
+}
+
+
+message Addr {
+    optional string ip = 1;
+    optional int32 port = 2;
+    optional int32 paxos_port = 3;
+}
+
+message AddRequest {
+    optional int32 topic_id = 1;
+    optional int32 store_id = 2;
+    optional int32 queue_id = 3;
+
+    repeated QItem items = 50;
+
+    optional Addr master_addr = 100;
+}
+
+message AddResponse {
+    optional uint64 cursor_id = 1 [default = 0xffffffffffffffff];
+    optional Addr redirect_addr = 101;
+}
+
+message GetRequest {
+    optional int32 topic_id = 1;
+    optional int32 store_id = 2;
+    optional int32 queue_id = 3;
+    optional int32 limit = 5;
+    optional uint64 atime  = 6;
+    optional int32 consumer_group_id = 7; // 如果consumer_group_id在target_consumer_group_ids中，那就拉取
+    optional uint32 atime_ms  = 8;
+
+    optional uint64 prev_cursor_id = 11;
+    optional uint64 next_cursor_id = 12;
+
+    optional bool random = 21;
+
+    optional Addr master_addr = 100;
+}
+
+message GetResponse {
+    repeated QItem items  = 1;
+    optional uint64 prev_cursor_id = 11;
+    optional uint64 next_cursor_id = 12;
+    optional Addr redirect_addr = 101;
+	optional int32 back_log = 201;
+}
+
+message AddrScale {
+    optional Addr addr = 1;
+    optional int32 scale = 2;
+}
+
+message LoadInfo {
+    optional int32 cpu = 1;
+    optional int32 proc_used_ratio = 2;
+}
+
+message GetAddrScaleRequest {
+    optional int32 topic_id = 1;
+    optional Addr addr = 2;
+    optional LoadInfo load_info = 3;
+
+    optional Addr master_addr = 100;
+}
+
+message GetAddrScaleResponse {
+    repeated AddrScale addr_scales = 1;
+
+    optional Addr redirect_addr = 101;
+}
+
+message StringInfo {
+    optional string key = 1;
+    optional uint64 version = 2;  // -1 for force set
+    optional bytes value = 3;
+    optional uint64 lease_time_ms = 4;  // -1 for infinity
+}
+
+message StringKeyInfo {
+    optional string key = 1;
+    optional uint64 version = 2;  // -1 for force set
+}
+
+message GetStringRequest {
+    optional int32 topic_id = 1;
+    optional int32 lock_id = 2;
+    optional string key = 3;
+
+    optional Addr master_addr = 100;
+}
+
+message GetStringResponse {
+    optional StringInfo string_info = 2;
+
+    optional Addr redirect_addr = 101;
+}
+
+message SetStringRequest {
+    optional int32 topic_id = 1;
+    optional int32 lock_id = 2;
+    optional StringInfo string_info = 3;
+
+    optional Addr master_addr = 100;
+}
+
+message SetStringResponse {
+    optional Addr redirect_addr = 101;
+}
+
+message DeleteStringRequest {
+    optional int32 topic_id = 1;
+    optional int32 lock_id = 2;
+    optional StringKeyInfo string_key_info = 3;
+
+    optional Addr master_addr = 100;
+}
+
+message DeleteStringResponse {
+    optional Addr redirect_addr = 101;
+}
+
+message LockInfo {
+    optional string lock_key = 1;
+    optional uint64 version = 2;
+    optional string client_id = 3;
+    optional uint64 lease_time_ms = 4;
+}
+
+message GetLockInfoRequest {
+    optional int32 topic_id = 1;
+    optional int32 lock_id = 2;
+    optional string lock_key = 3;
+
+    optional Addr master_addr = 100;
+}
+
+message GetLockInfoResponse {
+    optional LockInfo lock_info = 2;
+
+    optional Addr redirect_addr = 101;
+}
+
+message AcquireLockRequest {
+    optional int32 topic_id = 1;
+    optional int32 lock_id = 2;
+    optional LockInfo lock_info = 3;
+
+    optional Addr master_addr = 100;
+}
+
+message AcquireLockResponse {
+    optional Addr redirect_addr = 101;
+}
+
+enum QueueType {
+	NORMAL_QUEUE = 1;
+	TX_QUERY_QUEUE = 2;
+}
+
+enum EventHandleID {
+	HANDLER_PUSH = 1;
+	HANDLER_TX_QUERY = 2;
+}
+
+enum TxStatus {
+	TX_UNCERTAIN = 0;
+	TX_COMMIT = 1;
+	TX_ROLLBACK = 2;
+}
+
+message StatusInfo {
+	optional TxStatus tx_status = 1[default = TX_UNCERTAIN];
+	optional bytes commit_buffer = 2;
+}
+
+message TxQueryRequest {
+	optional int32 topic_id = 1;
+	optional int32 pub_id = 2;
+	optional string client_id = 3;
+	optional uint32 count = 4;
+	optional uint64 atime = 5;
+	optional bytes buffer = 6;
+}
+
+message TxQueryResponse {
+	optional StatusInfo status_info = 1;
+}
+
+message PushRequest {
+	optional int32 topic_id = 1;
+	optional int32 pub_id = 2;
+	optional string client_id = 3;
+	optional uint32 count = 4;
+	optional uint64 atime = 5;
+	optional bytes buffer = 6;
+}
+
+message PushResponse {
+	optional string result = 1;
+}
+
+

@@ -1,0 +1,16 @@
+syntax = "proto2";
+
+package skphxqueue.config.proto;
+
+message StoreConfig {
+    repeated Store stores = 1;
+}
+
+message Store {
+    optional int32 store_id = 1;
+    optional int32 scale = 3;
+    repeated int32 pub_ids = 20;
+
+    repeated string addrs = 102;
+}
+

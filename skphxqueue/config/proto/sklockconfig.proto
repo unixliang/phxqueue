@@ -1,0 +1,16 @@
+syntax = "proto2";
+
+package skphxqueue.config.proto;
+
+message LockConfig {
+    repeated Lock locks = 1;
+}
+
+message Lock {
+    optional int32 lock_id = 1;
+    optional int32 scale = 3;
+    repeated int32 pub_ids = 20;
+
+    repeated string addrs = 102;
+}
+

@@ -1,0 +1,45 @@
+syntax = "proto2";
+
+package skphxqueue.comm.proto;
+
+message SKOssConfig {
+    repeated OssInfo oss_infos = 1;
+}
+
+message OssInfo {
+    optional int32 topic_id = 1 [default = -1];
+    optional int32 store_id = 2 [default = -1];
+    optional int32 queue_id = 3 [default = -1];
+    optional uint64 uin = 5 [default = 0];
+    optional int32 consumer_group_id = 7 [default = -1];
+    optional int32 pub_id = 8 [default = -1];
+    optional int32 handle_id = 20 [default = -1];
+
+    optional int32 oss_attr_id_consumer = 101;
+    optional int32 oss_attr_id_consumer_consume = 102;
+    optional int32 oss_attr_id_consumer_hblock = 103;
+    optional int32 oss_attr_id_consumer_hblock_scale_hash = 104;
+
+    optional int32 oss_attr_id_store = 201;
+    optional int32 oss_attr_id_store_basemgr = 202;
+    optional int32 oss_attr_id_store_immaster = 203;
+    optional int32 oss_attr_id_store_snatch_master = 204;
+    optional int32 oss_attr_id_store_backlog = 205;
+    optional int32 oss_attr_id_store_onadd_paxos_group_id = 206;
+    optional int32 oss_attr_id_store_onadd_queue_info_id = 207;
+
+    optional int32 oss_attr_id_producer = 301;
+    optional int32 oss_attr_id_producer_consumer_group = 302;
+    optional int32 oss_attr_id_producer_store_id = 303;
+
+    optional int32 oss_attr_id_scheduler = 401;
+    optional int32 oss_attr_id_scheduler_load_balance = 403;
+    optional int32 oss_attr_id_scheduler_keep_master = 404;
+
+    optional int32 oss_attr_id_lock = 501;
+    optional int32 oss_attr_id_lock_immaster = 503;
+    optional int32 oss_attr_id_lock_snatch_master = 504;
+    optional int32 oss_attr_id_lock_sm = 505;
+
+}
+
