@@ -1,7 +1,7 @@
 #pragma once
 
-#include "./consumer/skconsumer.h"
-#include "./consumer/skconsumerinithelper.h"
-#include "./consumer/skconsumercallgraphhelper.h"
-#include "./consumer/skconsumerserverconfig.h"
+#include "skphxqueue/consumer/skconsumer.h"
+#include "skphxqueue/consumer/skconsumerinithelper.h"
+#include "skphxqueue/consumer/skconsumercallgraphhelper.h"
+#include "skphxqueue/consumer/skconsumerserverconfig.h"
 

@@ -1,12 +1,12 @@
 #pragma once
 
-#include "./config/newidcconfigmgr.h"
-#include "./config/skbaseclientconfig.h"
-#include "./config/skbaseconfig.h"
-#include "./config/skconsumerconfig.h"
-#include "./config/skglobalconfig.h"
-#include "./config/sklockconfig.h"
-#include "./config/skschedulerconfig.h"
-#include "./config/skstoreconfig.h"
-#include "./config/sktopicconfig.h"
+#include "skphxqueue/config/newidcconfigmgr.h"
+#include "skphxqueue/config/skbaseclientconfig.h"
+#include "skphxqueue/config/skbaseconfig.h"
+#include "skphxqueue/config/skconsumerconfig.h"
+#include "skphxqueue/config/skglobalconfig.h"
+#include "skphxqueue/config/sklockconfig.h"
+#include "skphxqueue/config/skschedulerconfig.h"
+#include "skphxqueue/config/skstoreconfig.h"
+#include "skphxqueue/config/sktopicconfig.h"
 

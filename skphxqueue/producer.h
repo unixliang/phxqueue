@@ -1,5 +1,5 @@
 #pragma once
 
-#include "./producer/skproducer.h"
-#include "./producer/skselector.h"
+#include "skphxqueue/producer/skproducer.h"
+#include "skphxqueue/producer/skselector.h"
 
