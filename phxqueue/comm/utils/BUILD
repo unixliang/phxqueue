@@ -15,6 +15,7 @@ cc_library(
     ],
     deps = [
         '//phxqueue:include',
+        '//phxqueue/phxqueue/comm:comm_proto',
         '//basic/colib:colib',
         '#pthread',
     ],

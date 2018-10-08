@@ -9,6 +9,8 @@ cc_library(
     ],
     deps = [
         '//phxqueue:include',
+        '//phxqueue/phxqueue/comm:comm_proto',
+        '//phxqueue/phxqueue/config:config_proto',
         '//mm3rd/glog:glog',
     ],
     export_incs = [ '.' ],

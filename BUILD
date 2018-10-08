@@ -1,5 +1,6 @@
 from mm_envs import *
 
+"""
 phxqueue_protoc_cmd = "cd %s; %s/mm3rd/protobuf/bin/protoc " \
         " --cpp_out=. -I. -I%s/mm3rd/protobuf/src/ " \
         "phxqueue/comm/proto/comm.proto " \
@@ -61,15 +62,15 @@ gen_rule(
             'skphxqueue/config/proto/skstoreconfig.pb.cc',
         ],
 )
-
+"""
 
 
 cc_library(
     name = 'include',
     deps = [
-         ':phxqueue_proto',
-         ':skphxqueue_proto',
-         '//mm3rd/protobuf:protobuf',
+         #':phxqueue_proto',
+         #':skphxqueue_proto',
+         #'//mm3rd/protobuf:protobuf',
     ],
     export_incs = [ '.' ],
     incs = [ 'phxqueue', 'phxqueue_phxrpc'],

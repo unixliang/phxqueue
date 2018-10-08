@@ -41,6 +41,7 @@ cc_binary(
         '//phxqueue:include',
         '//phxqueue/phxqueue/plugin:plugin',
         ':simpleproducer',
+        '#dl',
     ],
     extra_cppflags = [
         '-Wall',
@@ -58,6 +59,7 @@ cc_binary(
         '//phxqueue:include',
         '//phxqueue/phxqueue/store:store',
         '//phxqueue/phxqueue/plugin:plugin',
+        '#dl',
     ],
     extra_cppflags = [
         '-Wall',
@@ -263,6 +265,7 @@ cc_binary(
         '//phxqueue:include',
         '//phxqueue/phxqueue/plugin:plugin',
         '//phxqueue/phxqueue/comm:comm',
+        '#dl',
     ],
     export_incs = [ '.', ],
     extra_cppflags = [

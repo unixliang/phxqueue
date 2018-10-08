@@ -6,6 +6,7 @@ cc_library(
     ],
     deps = [
         '//phxqueue:include',
+        '//phxqueue/phxqueue/config:config_proto',
         '#pthread',
     ],
     export_incs = [ '.', ],

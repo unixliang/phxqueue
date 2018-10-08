@@ -12,7 +12,8 @@ cc_library(
     deps = [
         '//phxqueue:include',
         '//phxqueue/phxqueue/comm:comm',
-        #'//basic/colib:colib',
+        '//phxqueue/phxqueue/config/utils:utils',
+        '//phxqueue/phxqueue/producer:producer',
         '//basic/colib:colib',
         '#rt',
         '#z',
