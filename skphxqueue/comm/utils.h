@@ -1,6 +1,6 @@
 #pragma once
 
-#include "skphxqueue/utils/callgraph_util.h"
+#include "skphxqueue/comm/utils/callgraph_util.h"
 
 namespace skphxqueue {
 
