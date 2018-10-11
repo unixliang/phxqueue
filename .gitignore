@@ -2,8 +2,6 @@
 bin/
 lib/
 build/
-data/
-log/
 
 # Prerequisites
 *.d

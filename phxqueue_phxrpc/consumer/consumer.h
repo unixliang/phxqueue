@@ -25,7 +25,7 @@ namespace consumer {
 class Consumer : public phxqueue::consumer::Consumer {
   public:
     Consumer(const phxqueue::consumer::ConsumerOption &opt);
-    virtual ~Consumer() override;
+    virtual ~Consumer();
 
     virtual phxqueue::comm::RetCode
     UncompressBuffer(const std::string &buffer, const int buffer_type,
