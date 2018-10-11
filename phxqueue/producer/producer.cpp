@@ -72,11 +72,13 @@ comm::RetCode Producer::Init() {
     return comm::RetCode::RET_OK;
 }
 
-comm::RetCode Producer::Enqueue(const uint64_t uin, const int topic_id, const int pub_id, const std::string &buffer, const std::string client_id) {
+comm::RetCode Producer::Enqueue(const uint64_t uin, const int topic_id, const int pub_id,
+                                const std::string &buffer, const std::string client_id) {
     comm::RetCode ret;
 
     shared_ptr<const config::TopicConfig> topic_config;
-    if (comm::RetCode::RET_OK != (ret = config::GlobalConfig::GetThreadInstance()->GetTopicConfigByTopicID(topic_id, topic_config))) {
+    if (comm::RetCode::RET_OK !=
+        (ret = config::GlobalConfig::GetThreadInstance()->GetTopicConfigByTopicID(topic_id, topic_config))) {
         QLErr("GetTopicConfigByTopicID client_id %s ret %d", client_id.c_str(), as_integer(ret));
         return ret;
     }
@@ -323,7 +325,8 @@ comm::RetCode Producer::MakeAddRequests(const int topic_id,
 }
 
 
-comm::RetCode Producer::SelectAndAdd(comm::proto::AddRequest &req, comm::proto::AddResponse &resp, StoreSelector *ss, QueueSelector *qs) {
+comm::RetCode Producer::SelectAndAdd(comm::proto::AddRequest &req, comm::proto::AddResponse &resp,
+                                     StoreSelector *ss, QueueSelector *qs) {
     QLVerb("SelectAndAdd");
 
     comm::ProducerBP::GetThreadInstance()->OnSelectAndAdd(req);
