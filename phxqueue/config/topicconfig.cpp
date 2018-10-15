@@ -26,22 +26,22 @@ namespace config {
 using namespace std;
 
 class TopicConfig::TopicConfigImpl {
-	public:
-		TopicConfigImpl() {}
-		virtual ~TopicConfigImpl() {}
+  public:
+    TopicConfigImpl() {}
+    virtual ~TopicConfigImpl() {}
 
-		std::map<int, shared_ptr<proto::Pub>> pub_id2pub;
-		std::map<int, shared_ptr<proto::Sub>> sub_id2sub;
-		std::map<int, shared_ptr<proto::ConsumerGroup>> consumer_group_id2consumer_group;
-		std::map<int, shared_ptr<proto::QueueInfo>> queue_info_id2queue_info;
-		std::map<int, vector<pair<int, int>>> queue_info_id2ranges;
-		std::map<int, int> queue2queue_info_id;
-		std::map<int, int> pub_id2tx_query_consumer_group_id;
-		std::map<int, set<int>> pub_id2consumer_group_ids;
-		std::map<int, set<int>> pub_id2sub_ids;
-		std::map<int, int> handle_id2rank;
-		std::vector<shared_ptr<proto::FreqInfo>> freq_infos;
-		std::vector<unique_ptr<proto::ReplayInfo>> replay_infos; // read only once
+    map<int, shared_ptr<proto::Pub>> pub_id2pub;
+    map<int, shared_ptr<proto::Sub>> sub_id2sub;
+    map<int, shared_ptr<proto::ConsumerGroup>> consumer_group_id2consumer_group;
+    map<int, shared_ptr<proto::QueueInfo>> queue_info_id2queue_info;
+    map<int, vector<pair<int, int>>> queue_info_id2ranges;
+    map<int, int> queue2queue_info_id;
+    map<int, int> pub_id2tx_query_consumer_group_id;
+    map<int, set<int>> pub_id2consumer_group_ids;
+    map<int, set<int>> pub_id2sub_ids;
+    map<int, int> handle_id2rank;
+    vector<shared_ptr<proto::FreqInfo>> freq_infos;
+    vector<unique_ptr<proto::ReplayInfo>> replay_infos;  // read only once
 };
 
 TopicConfig::TopicConfig() : impl_(new TopicConfigImpl()){}
@@ -85,7 +85,7 @@ comm::RetCode TopicConfig::ReadConfig(proto::TopicConfig &proto) {
         auto queue_info = proto.add_queue_infos();
         queue_info->set_queue_info_id(4);
         queue_info->add_ranges("1010-1019");
-        queue_info->set_count(-1); //retry forever
+        queue_info->set_count(-1);  // retry forever
         queue_info->set_delay(20);
     }
 
@@ -212,7 +212,7 @@ comm::RetCode TopicConfig::Rebuild() {
         impl_->queue_info_id2queue_info.emplace(queue_info.queue_info_id(), make_shared<proto::QueueInfo>(queue_info));
 
         {
-            auto &&ranges = impl_->queue_info_id2ranges[queue_info.queue_info_id()];
+            auto &&ranges(impl_->queue_info_id2ranges[queue_info.queue_info_id()]);
 
             for (int j{0}; j < queue_info.ranges_size(); ++j) {
                 vector<string> arr;
@@ -458,7 +458,8 @@ bool TopicConfig::IsValidConsumerGroupID(const int consumer_group_id) const {
     return impl_->consumer_group_id2consumer_group.end() != it;
 }
 
-comm::RetCode TopicConfig::GetConsumerGroupByConsumerGroupID(const int consumer_group_id, shared_ptr<const proto::ConsumerGroup> &consumer_group) const {
+comm::RetCode TopicConfig::GetConsumerGroupByConsumerGroupID(const int consumer_group_id,
+        shared_ptr<const proto::ConsumerGroup> &consumer_group) const {
     consumer_group = nullptr;
 
     auto &&it = impl_->consumer_group_id2consumer_group.find(consumer_group_id);
