@@ -32,10 +32,10 @@ uint64_t MurmurHash64(const void *key, size_t len, uint64_t seed);
 int JumpConsistentHash64(uint64_t key, int32_t num_buckets);
 
 template <typename Key, typename Node>
-class ConsistenHash {
+class ConsistentHash {
   public:
-    ConsistenHash() {}
-    ~ConsistenHash() {}
+    ConsistentHash() {}
+    ~ConsistentHash() {}
 
     using NodeScale = std::pair<Node, int>;
     bool Init(const std::list<NodeScale> &node_scale_list, std::function<uint64_t (const Key &)> key_hash_func, std::function<uint64_t (const Node &, int scale)> node_hash_func) {
