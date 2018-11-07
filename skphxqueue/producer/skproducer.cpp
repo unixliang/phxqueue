@@ -22,6 +22,8 @@ using namespace std;
 void SKProducer::SetUserCookies(phxqueue::comm::proto::Cookies &user_cookie) {
     OssAttrInc(59104, 0, 1);
 
+    skphxqueue::comm::utils::PrintCallGraphInfo();
+
     // dyeloginfo
     {
         OssAttrInc(59104, 1, 1);
