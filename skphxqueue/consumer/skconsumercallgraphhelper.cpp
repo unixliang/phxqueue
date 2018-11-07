@@ -41,6 +41,7 @@ void SKConsumerCallGraphHelper::FixGraph() {
     Comm::CallStack cs;
     Comm::GetLastCallStack(&cs);
 
+    const uint32_t graph_id = dl.graphID;
     const int writebroker_ossid = cs.ossid();
     const int writebroker_cmdid = cs.cmdid();
     const uint32_t writebroker_graph_node_id = dl.graphNodeID; // writebroker的graph_node_id在dyeloginfo中
@@ -50,9 +51,10 @@ void SKConsumerCallGraphHelper::FixGraph() {
 
     OssAttrInc(112480, writebroker_ossid ? 1 : 2, 1);
     OssAttrInc(112480, writebroker_cmdid ? 3 : 4, 1);
-    OssAttrInc(112480, writebroker_graph_node_id ? 5 : 6, 1);
+    OssAttrInc(112480, writebroker_graph_node_id ? 5 : 6, 1); // graph_node_id为0的正常概率是1/65536
     OssAttrInc(112480, consumer_ossid ? 7 : 8, 1);
-    OssAttrInc(112480, consumer_graph_node_id ? 9 : 10, 1);
+    OssAttrInc(112480, consumer_graph_node_id ? 9 : 10, 1); // graph_node_id为0的正常概率是1/65536
+    OssAttrInc(112480, graph_id ? 18 : 19, 1); // 若graph_id为0，表示上层CGI未初始化callgraph，writebroker的graph_node_id也为0
 
     // writebroker->consumer
     {
@@ -65,7 +67,7 @@ void SKConsumerCallGraphHelper::FixGraph() {
             OssAttrInc(112480, 17, 1);
         }
 
-        if (consumer_graph_node_id && consumer_ossid) {
+        if (consumer_ossid) {
             OssAttrInc(112480, 12, 1);
 
             Comm::SKChannelComm::SetCallGraphNodeID(consumer_graph_node_id);
@@ -76,7 +78,7 @@ void SKConsumerCallGraphHelper::FixGraph() {
     }
 
     // consumer->other
-    if (consumer_graph_node_id && consumer_ossid) {
+    if (consumer_ossid) {
         OssAttrInc(112480, 14, 1);
 
         Comm::SetGraphNodeID(consumer_graph_node_id);// 设置consumer的graph_node_id到dyeloginfo中
