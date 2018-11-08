@@ -8,6 +8,7 @@
 
 #include "phxqueue/comm.h"
 
+#include "skphxqueue/comm.h"
 #include "skphxqueue/producer/skselector.h"
 
 
