@@ -32,6 +32,7 @@ class SKConsumerBP : public phxqueue::comm::ConsumerBP {
     virtual void OnGetWithItem(const phxqueue::comm::proto::ConsumerContext &cc, const std::vector<std::shared_ptr<phxqueue::comm::proto::QItem>> &items) override;
     virtual void OnDropAll(const phxqueue::comm::proto::ConsumerContext &cc, const std::vector<std::shared_ptr<phxqueue::comm::proto::QItem>> &items) override;
     virtual void OnGetSizeTooSmall(const phxqueue::comm::proto::ConsumerContext &cc, const std::vector<std::shared_ptr<phxqueue::comm::proto::QItem>> &items) override;
+    virtual void OnFreeMemoryAfterLockFail(const int topic_id) override;
 
     virtual void OnMemCheck(const int topic_id) override;
     virtual void OnMemCheckUnpass(const int topic_id) override;

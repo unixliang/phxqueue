@@ -506,8 +506,11 @@ void Consumer::ChildRun(const int vpid) {
     comm::ConsumerBP::GetThreadInstance()->OnChildRun(cc.topic_id());
 
     thread t(bind(&Consumer::ConsumeThreadRun, this, vpid));
+    
+    static uint64_t last_lock_succ_time = 0;
 
     while (true) {
+        auto now = comm::utils::Time::GetTimestampMS();
 
         BeforeLock(cc);
 
@@ -516,6 +519,10 @@ void Consumer::ChildRun(const int vpid) {
         int consumer_group_id, store_id, queue_id;
         if (comm::RetCode::RET_OK != (ret = impl_->lock.Lock(vpid, consumer_group_id, store_id, queue_id))) {
             if (comm::as_integer(ret) < 0) QLErr("DoLock ret %d vpid %u", comm::as_integer(ret), vpid);
+            if (last_lock_succ_time && last_lock_succ_time + 60000 < now) {
+                comm::ConsumerBP::GetThreadInstance()->OnFreeMemoryAfterLockFail(cc.topic_id());
+                exit(0); // free memory hold in libco/tcmalloc
+            }
             sleep(2);
             continue;
         }
@@ -530,6 +537,7 @@ void Consumer::ChildRun(const int vpid) {
         }
 
         comm::ConsumerBP::GetThreadInstance()->OnLockSucc(cc);
+        last_lock_succ_time = comm::utils::Time::GetSteadyClockMS();
 
         QLInfo("QUEUEINFO: vpid %u consumer_group_id %d store_id %d queue_id %d", vpid, cc.consumer_group_id(), cc.store_id(), cc.queue_id());
 

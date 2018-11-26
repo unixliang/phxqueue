@@ -231,6 +231,11 @@ void SKConsumerBP::OnMaxLoopCheckPass(const int topic_id) {
     GetMatchedOssInfos(oss_infos, topic_id);
     for (auto &&oss_info : oss_infos) MyOssAttrInc(oss_info->oss_attr_id_consumer(), 22, 1);
 }
+void SKConsumerBP::OnFreeMemoryAfterLockFail(const int topic_id) {
+    vector<shared_ptr<comm::proto::OssInfo>> oss_infos;
+    GetMatchedOssInfos(oss_infos, topic_id);
+    for (auto &&oss_info : oss_infos) MyOssAttrInc(oss_info->oss_attr_id_consumer(), 26, 1);
+}
 
 // SKConsumerConsumeBP
 void SKConsumerConsumeBP::OnConsumeThreadRun(const phxqueue::comm::proto::ConsumerContext &cc) {

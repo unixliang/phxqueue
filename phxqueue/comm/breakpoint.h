@@ -49,6 +49,7 @@ class ConsumerBP {
     virtual void OnGetWithItem(const proto::ConsumerContext &cc, const std::vector<std::shared_ptr<proto::QItem>> &items) {}
     virtual void OnDropAll(const proto::ConsumerContext &cc, const std::vector<std::shared_ptr<proto::QItem>> &items) {}
     virtual void OnGetSizeTooSmall(const proto::ConsumerContext &cc, const std::vector<std::shared_ptr<proto::QItem>> &items) {}
+    virtual void OnFreeMemoryAfterLockFail(const int topic_id) {}
 
     virtual void OnMemCheck(const int topic_id) {}
     virtual void OnMemCheckUnpass(const int topic_id) {}
