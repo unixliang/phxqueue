@@ -661,7 +661,8 @@ bool TopicConfig::QueueShouldSkip(const int queue, const int consumer_group_id) 
             skip_info.handle_id() == -1 &&
             (skip_info.consumer_group_id() == -1 || consumer_group_id == -1 || skip_info.consumer_group_id() == consumer_group_id) &&
             (skip_info.queue_info_id() == -1 || skip_info.queue_info_id() == queue_info_id) &&
-			skip_info.has_client_id() == false) {
+			skip_info.has_client_id() == false &&
+			skip_info.expire_threshold_s() == -1) {
             return true;
         }
     }
@@ -677,7 +678,8 @@ bool TopicConfig::ItemShouldSkip(const comm::proto::QItem &item, const int consu
             (skip_info.handle_id() == -1 || skip_info.handle_id() == item.handle_id()) &&
             (skip_info.consumer_group_id() == -1 || skip_info.consumer_group_id() == consumer_group_id) &&
             (skip_info.queue_info_id() == -1 || skip_info.queue_info_id() == queue_info_id) &&
-			(skip_info.has_client_id() == false || skip_info.client_id() == item.meta().client_id()) ) {
+			(skip_info.has_client_id() == false || skip_info.client_id() == item.meta().client_id()) &&
+			(skip_info.expire_threshold_s() == -1 || item.meta().atime() + skip_info.expire_threshold_s() < comm::utils::Time::GetTimestampMS() / 1000) ) {
             return true;
         }
     }

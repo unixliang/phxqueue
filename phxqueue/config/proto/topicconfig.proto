@@ -168,6 +168,7 @@ message SkipInfo {
     optional int32 queue_info_id = 4 [default = -1];
     optional int32 handle_id = 5 [default = -1];
 	optional string client_id = 6;
+	optional int32 expire_threshold_s = 7 [default = -1];
 }
 
 // consumer process freq config. the relation of conditions(pub_id/consumer_group_id/handle_id/queue_info_id) is &.
