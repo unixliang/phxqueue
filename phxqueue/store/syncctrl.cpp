@@ -134,7 +134,11 @@ comm::RetCode SyncCtrl::AdjustNextCursorID(const int consumer_group_id, const in
     if (item.next_magic != SYNCCTRL_MAGIC || item.next_cursor_id != next_cursor_id ||
         (-1 != prev_cursor_id && prev_cursor_id > next_cursor_id)) {
         if (item.prev_magic != SYNCCTRL_MAGIC) return comm::RetCode::RET_ERR_CURSOR_NOT_FOUND;
-        prev_cursor_id = next_cursor_id = item.prev_cursor_id;
+        if (item.prev_cursor_id == prev_cursor_id && (item.next_cursor_id / 10000 == next_cursor_id / 10000)) {
+            // next_cursor_id no big different
+        } else {
+            prev_cursor_id = next_cursor_id = item.prev_cursor_id;
+        }
     }
 
     if (item.prev_magic == SYNCCTRL_MAGIC &&
