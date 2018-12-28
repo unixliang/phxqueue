@@ -40,9 +40,9 @@ message Topic {
     optional int32 store_paxos_master_lease = 433 [default = 5000]; // lease time of being master. (default value recommanded)
     optional int32 store_paxos_propose_wait_time_threshold_ms = 434 [default = 800]; // timeout of thread blocking on Node::Propose/Node::BatchPropose.
     optional int32 store_paxos_log_sync = 435 [default = 1]; // flush disk in Node::Propose/Node::BatchPropose.
-    optional int32 store_paxos_batch_count = 436 [default = 20]; // Node::BatchPropose process paxos protocal when blocking threads num reach store_paxos_batch_count. (default value recommanded)
-    optional int32 store_paxos_batch_delay_time_ms = 437 [default = 20]; // !or! blocking time reach store_paxos_batch_delay_time_ms.
-    optional int32 store_paxos_fsync_interval = 438 [default = 5]; // the numer of Node::Propose/Node::BatchPropose to trigger once flush disk. (!!default value for RAID Write Back!!)
+    optional int32 store_paxos_batch_count = 436 [default = 50]; // Node::BatchPropose process paxos protocal when blocking threads num reach store_paxos_batch_count. (default value recommanded)
+    optional int32 store_paxos_batch_delay_time_ms = 437 [default = 10]; // !or! blocking time reach store_paxos_batch_delay_time_ms.
+    optional int32 store_paxos_fsync_interval = 438 [default = 20]; // the numer of Node::Propose/Node::BatchPropose to trigger once flush disk. (!!default value for RAID Write Back!!)
     optional int32 store_paxos_oss_attr_id = 439; // monitor config for phxpaxos::Options::poBreakpoint.
     optional int32 store_paxos_oss_attr_id_usetime = 440; // monitor config for phxpaxos::Options::poBreakpoint.
     optional int32 store_paxos_hold_log_count = 441 [default = 100000]; // paxos log hold before checkpoint, just for replay.
