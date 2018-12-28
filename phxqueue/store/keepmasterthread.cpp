@@ -290,6 +290,8 @@ void KeepMasterThread::UpdatePaxosArgs() {
                 topic_config->GetProto().topic().store_paxos_propose_wait_time_threshold_ms());
         node->SetLogSync(paxos_group_id,
                 topic_config->GetProto().topic().store_paxos_log_sync());
+        node->SetSyncInterval(paxos_group_id,
+                topic_config->GetProto().topic().store_paxos_fsync_interval());
         node->SetBatchCount(paxos_group_id,
                 topic_config->GetProto().topic().store_paxos_batch_count());
         node->SetBatchDelayTimeMs(paxos_group_id,
