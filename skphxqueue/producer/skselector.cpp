@@ -118,7 +118,7 @@ bool SKStoreSelectorDefault::IsStorePercentBlocked(const int store_id) {
         const char *ip = addr.ip().c_str();
         const int port = addr.port();
 
-        if (Comm::IsPercentBlocked(ip, port, dyeuin)) {
+        if (Comm::IsPercentBlocked(ip, port, dyeuin ? dyeuin : Comm::GetRandomUin())) {
             ++nblock_percent;
             OssAttrInc(114904, 24, 1);
             MMERR("ERR: addr(%s:%d) dyeuin %u is percent blocked", ip, port, dyeuin);
