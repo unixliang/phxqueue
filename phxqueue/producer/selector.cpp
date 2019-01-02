@@ -240,6 +240,11 @@ comm::RetCode StoreSelectorDefault::GetStoreID(int &store_id) {
         }
     }
 
+    if (-1 != store_id && IsStorePercentBlocked(store_id)) {
+        QLErr("store_id %d IsStorePercentBlocked", store_id);
+        return comm::RetCode::RET_ERR_SVR_PERCENT_BLOCK;
+    }
+
     return comm::RetCode::RET_OK;
 }
 

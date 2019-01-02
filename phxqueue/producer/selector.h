@@ -59,6 +59,7 @@ class StoreSelectorDefault : public StoreSelector {
 
   protected:
     virtual bool IsStoreBlocked(const int store_id) {return false;}
+    virtual bool IsStorePercentBlocked(const int store_id) {return false;}
 
     int GetTopicID();
     int GetPubID();
