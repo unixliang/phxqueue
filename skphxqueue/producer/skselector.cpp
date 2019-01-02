@@ -121,7 +121,7 @@ bool SKStoreSelectorDefault::IsStorePercentBlocked(const int store_id) {
         if (Comm::IsPercentBlocked(ip, port, dyeuin)) {
             ++nblock_percent;
             OssAttrInc(114904, 24, 1);
-            MMERR("ERR: addr(%s:%d) is percent blocked", ip, port);
+            MMERR("ERR: addr(%s:%d) dyeuin %u is percent blocked", ip, port, dyeuin);
         } else {
             OssAttrInc(114904, 25, 1);
         }
