@@ -19,6 +19,7 @@ class SKStoreSelectorDefault : public phxqueue::producer::StoreSelectorDefault {
 
   private:
     virtual bool IsStoreBlocked(const int store_id);
+    virtual bool IsStorePercentBlocked(const int store_id);
 };
 
 
