@@ -61,6 +61,22 @@ void SKProducer::SetUserCookies(phxqueue::comm::proto::Cookies &user_cookie) {
             OssAttrInc(59104, 6, 1);
         }
     }
+
+    // usercookie
+    {
+        OssAttrInc(59104, 21, 1);
+        Comm::MMUserCookie *usrcookie = Comm::GetUserCookie();
+        std::string cookie_buf;
+        if (usrcookie->SerializeToString(&cookie_buf)) {
+            auto &&cookie = user_cookie.add_cookies();
+            cookie->set_key("usercookie");
+            cookie->set_val(cookie_buf);
+            OssAttrInc(59104, 22, 1);
+        } else {
+            OssAttrInc(59104, 23, 1);
+        }
+    }
+
 }
 
 void SKProducer::CompressBuffer(const string &buffer,

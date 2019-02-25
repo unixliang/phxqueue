@@ -168,6 +168,27 @@ void SKConsumer::RestoreUserCookies(const phxqueue::comm::proto::Cookies &user_c
     } else {
         OssAttrInc(59104, 17, 1);
     }
+
+
+
+    // usercookie
+    {
+        for (size_t i{0}; i < user_cookies.cookies_size(); ++i) {
+            auto &&cookie = user_cookies.cookies(i);
+
+            if (cookie.key() == "usercookie") {
+                OssAttrInc(59104, 24, 1);
+                Comm::MMUserCookie usrcookie;
+                if (usrcookie.ParseFromString(cookie.val())) {
+                    Comm::GetUserCookie()->Swap(&usrcookie);
+                    OssAttrInc(59104, 25, 1);
+                } else {
+                    OssAttrInc(59104, 26, 1);
+                }
+            }
+        }
+    }
+
     Comm::OpenCacheLog();
 }
 
