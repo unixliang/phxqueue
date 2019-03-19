@@ -72,7 +72,7 @@ comm::RetCode Producer::Init() {
     return comm::RetCode::RET_OK;
 }
 
-comm::RetCode Producer::Enqueue(const uint64_t uin, const int topic_id, const int pub_id, const std::string &buffer, const std::string client_id) {
+comm::RetCode Producer::Enqueue(const uint64_t uin, const int topic_id, const int pub_id, const std::string &buffer, const std::string client_id, const std::set<int> *sub_ids) {
     comm::RetCode ret;
 
     shared_ptr<const config::TopicConfig> topic_config;
@@ -89,13 +89,26 @@ comm::RetCode Producer::Enqueue(const uint64_t uin, const int topic_id, const in
 		return ret;
 	}
 
-	set<int> sub_ids;
-	if (comm::RetCode::RET_OK != (ret = topic_config->GetSubIDsByPubID(pub_id, sub_ids))) {
+	set<int> specified_sub_ids;
+	if (comm::RetCode::RET_OK != (ret = topic_config->GetSubIDsByPubID(pub_id, specified_sub_ids))) {
 		QLErr("GetSubIDsByPubID client_id %s ret %d", client_id.c_str(), as_integer(ret));
 		return ret;
 	}
 
-	return Enqueue(topic_id, uin, handle_id, buffer, pub_id, &consumer_group_ids, &sub_ids, client_id);
+	if (sub_ids != nullptr
+			&& sub_ids->size() > 0) {
+		for (auto iter = specified_sub_ids.begin(); iter != specified_sub_ids.end(); ) {
+			int sub_id = *iter;
+			if (sub_ids->find(sub_id) == sub_ids->end()) {
+				iter = specified_sub_ids.erase(iter);
+			}
+			else {
+				iter ++;
+			}
+		}
+	}
+
+	return Enqueue(topic_id, uin, handle_id, buffer, pub_id, &consumer_group_ids, &specified_sub_ids, client_id);
 }
 
 comm::RetCode Producer::Enqueue(const int topic_id, const uint64_t uin, const int handle_id, const string &buffer,
