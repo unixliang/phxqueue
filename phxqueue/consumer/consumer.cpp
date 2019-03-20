@@ -912,7 +912,8 @@ comm::RetCode Consumer::Handle(const comm::proto::ConsumerContext &cc,
         return ret;
     }
 
-	if (item.handle_id() == 0) {
+    // for compate old version
+	{
 		item.set_handle_id(item.meta().handle_id());
 	}
 
