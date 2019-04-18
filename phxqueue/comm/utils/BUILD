@@ -22,7 +22,6 @@ cc_library(
     export_incs = [ '.', ],
     extra_cppflags = [
         '-Wall',
-        '-Werror',
         '-std=c++11',
 		'-Wno-implicit-fallthrough',
     ]
