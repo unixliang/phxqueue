@@ -22,6 +22,7 @@ cc_library(
         '-Wall',
         '-Werror',
         '-std=c++11',
+		'-Wno-implicit-fallthrough',
     ],
 )
 
