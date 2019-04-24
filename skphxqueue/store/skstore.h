@@ -16,6 +16,8 @@ class SKStore : public phxqueue::store::Store {
 
     virtual bool NeedDropMaster(const int paxos_group_id) override;
 
+    virtual bool IsStable();
+
   private:
     virtual void BeforeRunNode(phxpaxos::Options &opts) override;
 };

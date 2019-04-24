@@ -40,6 +40,21 @@ bool SKStore::NeedDropMaster(const int paxos_group_id) {
     return false;
 }
 
+
+bool SKStore::IsStable() {
+    auto cpu = phxqueue::comm::utils::GetCpu();
+    if (cpu > 70) {
+        MMERR("WARN: cpu %d > 70", cpu);
+        return false;
+    } else {
+        MMERR("INFO: cpu %d", cpu);
+    }
+
+    MMERR("INFO: ok");
+
+    return true;
+}
+
 void SKStore::BeforeRunNode(phxpaxos::Options &opts) {
     const int topic_id{GetTopicID()};
 
