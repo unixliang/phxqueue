@@ -46,6 +46,9 @@ class KeepMasterThread::KeepMasterThreadImpl {
 
     unique_ptr<thread> t;
     bool stop{true};
+
+
+    bool in_stable{false};
 };
 
 
@@ -89,8 +92,19 @@ void KeepMasterThread::DoRun() {
         exit(-1);
     }
 
+    uint64_t last_stable_start_ts{0};
+
     while (true) {
         if (impl_->stop) return;
+
+        auto now_ts = comm::utils::Time::GetSteadyClockMS();
+        if (impl_->store->IsStable()) {
+            if (0 == last_stable_start_ts) last_stable_start_ts = now_ts;
+        } else {
+            last_stable_start_ts = 0;
+        }
+        auto store_time_s_take_to_be_stable = topic_config->GetProto().topic().store_time_s_take_to_be_stable();
+        impl_->in_stable = (0 == store_time_s_take_to_be_stable || (last_stable_start_ts && now_ts >= last_stable_start_ts + store_time_s_take_to_be_stable * 1000));
 
         sleep(topic_config->GetProto().topic().store_adjust_master_rate_time_interval_s());
 
@@ -152,6 +166,8 @@ void KeepMasterThread::AdjustMasterRate() {
 
 void KeepMasterThread::KeepMaster() {
     comm::RetCode ret;
+
+
 
     const int topic_id(impl_->store->GetTopicID());
 
@@ -220,6 +236,12 @@ void KeepMasterThread::KeepMaster() {
         }
 
         if (idx_in_store != paxos_group_id % store->addrs_size()) continue;
+
+        if (!impl_->in_stable) {
+            QLInfo("MASTERSTAT: not in stable. stop try to get back master. paxos_group_id %d master_rate %d",
+                   paxos_group_id, impl_->master_rate);
+            continue;
+        }
 
         QLInfo("MASTERSTAT: begin try to get back master. paxos_group_id %d master_rate %d",
                paxos_group_id, impl_->master_rate);

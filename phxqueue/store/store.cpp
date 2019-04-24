@@ -636,6 +636,9 @@ bool Store::NeedDropMaster(const int paxos_group_id) {
     return false;
 }
 
+bool Store::IsStable() {
+    return true;
+}
 
 }  // namespace  store
 

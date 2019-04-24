@@ -84,6 +84,10 @@ class Store {
     // You can implement your own HA strategy here.
     virtual bool NeedDropMaster(const int paxos_group_id);
 
+    // If returned False, store will stop get back master that should be under its own jurisdiction but not on itself.
+    // You can implement your own HA strategy here.
+    virtual bool IsStable();
+
     // Callback before the paxos processing starts, to modify phxpaxos::Options.
     virtual void BeforeRunNode(phxpaxos::Options &opts) {}
 
