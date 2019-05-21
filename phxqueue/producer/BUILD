@@ -1,29 +1,26 @@
-from mm_envs import *
-
 
 cc_library(
-    target_bases = [ 'mmcomm', ],
-    name = 'producer',
+    name = "producer",
     srcs = [
-        'producer.cpp',
-        'selector.cpp',
-        'batchhelper.cpp',
+        "batchhelper.cpp",
+        "producer.cpp",
+        "selector.cpp",
     ],
+    hdrs = [
+    ],
+    includes = ['.'],
     deps = [
-        '//phxqueue:include',
-        '//phxqueue/phxqueue/comm:comm',
-        '//phxqueue/phxqueue/config:config',
-        '#rt',
-        '#z',
+        "//phxqueue:include",
+        "//phxqueue/phxqueue/comm:comm",
+        "//phxqueue/phxqueue/config:config",
     ],
-    export_incs = [ '.', ],
-    optimize = [
-        'O2',
+    copts = [
+        "-std=c++11",
     ],
-    extra_cppflags = [
-        '-Wall',
-        '-Werror',
-        '-std=c++11',
-    ]
+    linkopts = [
+        "-lrt",
+        "-lz",
+    ],
+    visibility = ["//visibility:public"],
 )
 

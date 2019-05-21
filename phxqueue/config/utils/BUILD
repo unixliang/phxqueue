@@ -1,18 +1,24 @@
+
 cc_library(
-    name = 'utils',
+    name = "utils",
     srcs = [
-        'pub_util.cpp',
-        'consumer_group_util.cpp',
+        "consumer_group_util.cpp",
+        "pub_util.cpp",
     ],
+    hdrs = [
+    ],
+    includes = ['.'],
     deps = [
-        '//phxqueue:include',
-        '//phxqueue/phxqueue/config:config_proto',
-        '#pthread',
+        "//phxqueue:include",
+        "//phxqueue/phxqueue/config:config_proto",
+        "//phxqueue/phxqueue/config:include",
     ],
-    export_incs = [ '.', ],
-    extra_cppflags = [
-        '-Wall',
-        '-Werror',
-        '-std=c++11',
-    ]
+    copts = [
+        "-std=c++11",
+    ],
+    linkopts = [
+        "-lpthread",
+    ],
+    visibility = ["//visibility:public"],
 )
+

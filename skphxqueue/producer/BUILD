@@ -1,32 +1,29 @@
-from mm_envs import *
-
 
 cc_library(
-    target_bases = [ 'mmcomm', ],
-    name = 'producer',
+    name = "producer",
     srcs = [
-        'skproducer.cpp',
-        'skselector.cpp',
+        "skproducer.cpp",
+        "skselector.cpp",
     ],
+    hdrs = [
+    ],
+    includes = ['.'],
     deps = [
-        '//phxqueue:include',
-        '//phxqueue/skphxqueue/comm:comm',
-        '//phxqueue/skphxqueue/plugin:plugin',
-        '//phxqueue/skphxqueue/config:config',
-        '//phxqueue/phxqueue/producer:producer',
-        '//comm2/core:core',
-        '//comm2/svrkit:svrkit_cm',
-        '//comm2/svrkit:svrkitepoll',
-        '//mmcomm/mmsection2pb:mmsection2pb',
+        "//phxqueue:include",
+        "//phxqueue/skphxqueue/comm:comm",
+        "//phxqueue/skphxqueue/plugin:plugin",
+        "//phxqueue/skphxqueue/config:config",
+        "//phxqueue/phxqueue/producer:producer",
+        "//comm2/core:core",
+        "//comm2/svrkit:svrkit_cm",
+        "//comm2/svrkit:svrkitepoll",
+        "//mmcomm/mmsection2pb:mmsection2pb",
     ],
-    export_incs = [ '.', ],
-    optimize = [
-        'O2',
+    copts = [
+        "-std=c++11",
     ],
-    extra_cppflags = [
-        '-Wall',
-        '-Werror',
-        '-std=c++11',
-    ]
+    linkopts = [
+    ],
+    visibility = ["//visibility:public"],
 )
 

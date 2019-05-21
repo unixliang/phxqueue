@@ -1,29 +1,34 @@
+
 cc_library(
-    name = 'utils',
+    name = "utils",
     srcs = [
-        'addr_util.cpp',
-        'file_util.cpp',
-        'load_util.cpp',
-        'memory_util.cpp',
-        'other_util.cpp',
-        'string_util.cpp',
-        'time_util.cpp',
-        'benchmark_util.cpp',
-        'co_util.cpp',
-        'hash_util.cpp',
-		'consumer_group_util.cpp',
+        "addr_util.cpp",
+        "benchmark_util.cpp",
+        "co_util.cpp",
+        "consumer_group_util.cpp",
+        "file_util.cpp",
+        "hash_util.cpp",
+        "load_util.cpp",
+        "memory_util.cpp",
+        "other_util.cpp",
+        "string_util.cpp",
+        "time_util.cpp",
     ],
+    hdrs = [
+    ],
+    includes = ['.'],
     deps = [
-        '//phxqueue:include',
-        '//phxqueue/phxqueue/comm:comm_proto',
-        '//basic/colib:colib',
-        '#pthread',
+        "//phxqueue:include",
+        "//phxqueue/phxqueue/comm:comm_proto",
+        "//basic/colib:colib",
     ],
-    export_incs = [ '.', ],
-    extra_cppflags = [
-        '-Wall',
-        '-Werror',
-        '-std=c++11',
-		'-Wno-implicit-fallthrough',
-    ]
+    copts = [
+        "-std=c++11",
+        "-Wno-implicit-fallthrough",
+    ],
+    linkopts = [
+        "-lpthread",
+    ],
+    visibility = ["//visibility:public"],
 )
+

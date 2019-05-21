@@ -1,32 +1,31 @@
-from mm_envs import *
 
 cc_library(
-    target_bases = [ 'mmcomm', ],
-    name = 'store',
+    name = "store",
     srcs = [
-        'skstore.cpp',
+        "skstore.cpp",
     ],
+    hdrs = [
+    ],
+    includes = ['.'],
     deps = [
-        '//phxqueue:include',
-        '//phxqueue/skphxqueue/comm:comm',
-        '//phxqueue/skphxqueue/plugin:plugin',
-        '//phxqueue/skphxqueue/config:config',
-        '//phxqueue/phxqueue/store:store',
-        '//comm2/core:core',
-        '//comm2/svrkit:svrkit_cm',
-        '//comm2/svrkit:svrkitepoll',
-        '//mmcomm/mmsection2pb:mmsection2pb',
-        '//phxpaxos/skplugin/include:include',
-        '//phxpaxos/skplugin:phxpaxos_skplugin',
-        '//phxpaxos:phxpaxos',
+        "//phxqueue:include",
+        "//phxqueue/skphxqueue/comm:comm",
+        "//phxqueue/skphxqueue/plugin:plugin",
+        "//phxqueue/skphxqueue/config:config",
+        "//phxqueue/phxqueue/store:store",
+        "//comm2/core:core",
+        "//comm2/svrkit:svrkit_cm",
+        "//comm2/svrkit:svrkitepoll",
+        "//mmcomm/mmsection2pb:mmsection2pb",
+        "//phxpaxos/skplugin/include:include",
+        "//phxpaxos/skplugin:phxpaxos_skplugin",
+        "//phxpaxos:phxpaxos",
     ],
-    optimize = [
-        'O2',
+    copts = [
+        "-std=c++11",
     ],
-    extra_cppflags = [
-        '-Wall',
-        '-Werror',
-        '-std=c++11',
-    ]
+    linkopts = [
+    ],
+    visibility = ["//visibility:public"],
 )
 

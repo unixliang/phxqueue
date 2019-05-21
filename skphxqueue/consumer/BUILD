@@ -1,31 +1,30 @@
-from mm_envs import *
 
 cc_library(
-    target_bases = [ 'mmcomm', ],
-    name = 'consumer',
+    name = "consumer",
     srcs = [
-        'skconsumer.cpp',
-        'skconsumerinithelper.cpp',
-        'skconsumerserverconfig.cpp',
-        'skconsumercallgraphhelper.cpp',
+        "skconsumer.cpp",
+        "skconsumercallgraphhelper.cpp",
+        "skconsumerinithelper.cpp",
+        "skconsumerserverconfig.cpp",
     ],
+    hdrs = [
+    ],
+    includes = ['.'],
     deps = [
-        '//phxqueue:include',
-        '//phxqueue/skphxqueue/comm:comm',
-        '//phxqueue/skphxqueue/plugin:plugin',
-        '//phxqueue/phxqueue/consumer:consumer',
-        '//comm2/core:core',
-        '//comm2/svrkit:svrkit_cm',
-        '//comm2/svrkit:svrkitepoll',
-        '//mmcomm/mmsection2pb:mmsection2pb',
+        "//phxqueue:include",
+        "//phxqueue/skphxqueue/comm:comm",
+        "//phxqueue/skphxqueue/plugin:plugin",
+        "//phxqueue/phxqueue/consumer:consumer",
+        "//comm2/core:core",
+        "//comm2/svrkit:svrkit_cm",
+        "//comm2/svrkit:svrkitepoll",
+        "//mmcomm/mmsection2pb:mmsection2pb",
     ],
-    optimize = [
-        'O2',
+    copts = [
+        "-std=c++11",
     ],
-    extra_cppflags = [
-        '-Wall',
-        '-Werror',
-        '-std=c++11',
-   ]
+    linkopts = [
+    ],
+    visibility = ["//visibility:public"],
 )
 

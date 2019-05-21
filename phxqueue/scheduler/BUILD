@@ -1,26 +1,25 @@
-from mm_envs import *
 
 cc_library(
-    target_bases = [ 'mmcomm', ],
-    name = 'scheduler',
+    name = "scheduler",
     srcs = [
-        'keepmasterthread.cpp',
-        'loadbalancethread.cpp',
-        'scheduler.cpp',
-        'schedulermgr.cpp',
+        "keepmasterthread.cpp",
+        "loadbalancethread.cpp",
+        "scheduler.cpp",
+        "schedulermgr.cpp",
     ],
+    hdrs = [
+    ],
+    includes = ['.'],
     deps = [
-        '//phxqueue:include',
-        '//phxqueue/phxqueue/comm:comm',
-        '//phxqueue/phxqueue/config:config',
+        "//phxqueue:include",
+        "//phxqueue/phxqueue/comm:comm",
+        "//phxqueue/phxqueue/config:config",
     ],
-    optimize = [
-        'O2',
+    copts = [
+        "-std=c++11",
     ],
-    extra_cppflags = [
-        '-Wall',
-        '-Werror',
-        '-std=c++11',
+    linkopts = [
     ],
+    visibility = ["//visibility:public"],
 )
 

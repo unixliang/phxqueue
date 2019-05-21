@@ -1,31 +1,30 @@
-from mm_envs import *
 
 cc_library(
-    target_bases = [ 'mmcomm', ],
-    name = 'consumer',
+    name = "consumer",
     srcs = [
-        'hblock.cpp',
-        'consumer.cpp',
-        'freqman.cpp',
-		'eventhandler.cpp',
+        "consumer.cpp",
+        "eventhandler.cpp",
+        "freqman.cpp",
+        "hblock.cpp",
     ],
+    hdrs = [
+    ],
+    includes = ['.'],
     deps = [
-        '//phxqueue:include',
-        '//phxqueue/phxqueue/comm:comm',
-        '//phxqueue/phxqueue/config/utils:utils',
-        '//phxqueue/phxqueue/producer:producer',
-        '//basic/colib:colib',
-        '#rt',
-        '#z',
-        '#dl',
+        "//phxqueue:include",
+        "//phxqueue/phxqueue/comm:comm",
+        "//phxqueue/phxqueue/config/utils:utils",
+        "//phxqueue/phxqueue/producer:producer",
+        "//basic/colib:colib",
     ],
-    optimize = [
-        'O2',
+    copts = [
+        "-std=c++11",
     ],
-    extra_cppflags = [
-        '-Wall',
-        '-Werror',
-        '-std=c++11',
-   ]
+    linkopts = [
+        "-ldl",
+        "-lrt",
+        "-lz",
+    ],
+    visibility = ["//visibility:public"],
 )
 

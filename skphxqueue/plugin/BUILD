@@ -1,29 +1,27 @@
-from mm_envs import *
 
 cc_library(
-    name = 'plugin',
+    name = "plugin",
     srcs = [
-        'skbreakpointfactory.cpp',
-        'skconfigfactory.cpp',
-        'sklogger.cpp',
+        "skbreakpointfactory.cpp",
+        "skconfigfactory.cpp",
+        "sklogger.cpp",
     ],
+    hdrs = [
+    ],
+    includes = ['.'],
     deps = [
-        '//phxqueue:include',
-        '//phxqueue/skphxqueue/comm:comm',
-        '//phxqueue/skphxqueue/config:config',
-        '//comm2/core:core',
-        '//mmcomm/mmsection2pb:mmsection2pb',
+        "//phxqueue:include",
+        "//phxqueue/skphxqueue/comm:comm",
+        "//phxqueue/skphxqueue/config:config",
+        "//comm2/core:core",
+        "//mmcomm/mmsection2pb:mmsection2pb",
     ],
-    export_incs = [ '.' ],
-    optimize = [
-        'O2',
+    copts = [
+        "-std=c++11",
+        "-Wno-implicit-fallthrough",
     ],
-    extra_cppflags = [
-        '-Wall',
-        '-Werror',
-        '-std=c++11',
-		'-Wno-implicit-fallthrough',
+    linkopts = [
     ],
+    visibility = ["//visibility:public"],
 )
-
 

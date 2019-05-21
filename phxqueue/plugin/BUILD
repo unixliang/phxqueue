@@ -1,26 +1,25 @@
-from mm_envs import *
 
 cc_library(
-    name = 'plugin',
+    name = "plugin",
     srcs = [
-        'breakpointfactory.cpp',
-        'configfactory.cpp',
-        'logger_google.cpp',
+        "breakpointfactory.cpp",
+        "configfactory.cpp",
+        "logger_google.cpp",
     ],
+    hdrs = [
+    ],
+    includes = ['.'],
     deps = [
-        '//phxqueue:include',
-        '//phxqueue/phxqueue/comm:comm_proto',
-        '//phxqueue/phxqueue/config:config_proto',
-        '//mm3rd/glog:glog',
+        "//phxqueue:include",
+        "//phxqueue/phxqueue/comm:comm_proto",
+        "//phxqueue/phxqueue/config:config_proto",
+        "//mm3rd/glog:glog",
     ],
-    export_incs = [ '.' ],
-    optimize = [
-        'O2',
+    copts = [
+        "-std=c++11",
     ],
-    extra_cppflags = [
-        '-Wall',
-        '-Werror',
-        '-std=c++11',
+    linkopts = [
     ],
+    visibility = ["//visibility:public"],
 )
 
