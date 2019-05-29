@@ -88,7 +88,7 @@ comm::RetCode GlobalConfig::Rebuild() {
 
         shared_ptr<TopicConfig> topic_config = plugin::ConfigFactory::GetInstance()->NewTopicConfig(topic_info.topic_id(), topic_info.topic_config_path());
         if (topic_config) {
-            topic_config->Load();
+            //topic_config->Load();
             impl_->topic_id2topic_config.emplace(topic_info.topic_id(), topic_config);
         }
 
@@ -98,25 +98,25 @@ comm::RetCode GlobalConfig::Rebuild() {
 
         auto &&consumer_config = plugin::ConfigFactory::GetInstance()->NewConsumerConfig(topic_info.topic_id(), topic_info.consumer_config_path());
         if (consumer_config) {
-            consumer_config->Load();
+            //consumer_config->Load();
             impl_->topic_id2consumer_config.emplace(topic_info.topic_id(), move(consumer_config));
         }
 
         auto &&store_config = plugin::ConfigFactory::GetInstance()->NewStoreConfig(topic_info.topic_id(), topic_info.store_config_path());
         if (store_config) {
-            store_config->Load();
+            //store_config->Load();
             impl_->topic_id2store_config.emplace(topic_info.topic_id(), move(store_config));
         }
 
         auto &&scheduler_config = plugin::ConfigFactory::GetInstance()->NewSchedulerConfig(topic_info.topic_id(), topic_info.scheduler_config_path());
         if (scheduler_config) {
-            scheduler_config->Load();
+            //scheduler_config->Load();
             impl_->topic_id2scheduler_config.emplace(topic_info.topic_id(), move(scheduler_config));
         }
 
         auto &&lock_config = plugin::ConfigFactory::GetInstance()->NewLockConfig(topic_info.topic_id(), topic_info.lock_config_path());
         if (lock_config) {
-            lock_config->Load();
+            //lock_config->Load();
             impl_->topic_id2lock_config.emplace(topic_info.topic_id(), move(lock_config));
         }
     }
